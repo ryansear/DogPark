@@ -31,26 +31,9 @@ class Login extends Component {
     }
 
     async signup() {
-
-        try {
-            await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
-
-            this.setState({
-                response: "account created"
-            });
-
-            setTimeout(() => {
-                this.props.navigator.push({
-                    name: "Home"
-                })
-            }, 1500);
-
-        } catch (error) {
-            this.setState({
-                response: error.toString()
-            })
-        }
-
+      this.props.navigator.push({
+          name: "Signup"
+});
     }
 
     async login() {

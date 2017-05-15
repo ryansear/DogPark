@@ -1,25 +1,23 @@
 import * as firebase from "firebase";
 
 class Database{
-  static setFeedback(teamNum, feedback){
-    let teamFeedback = "/user/" + teamNum + "/details";
-    return firebase.database().ref(teamFeedback).set({
-      feedback: feedback
+  static setLocation(location){
+    let userLocation = "/user/" + userLocation;
+    return firebase.database().ref(userLocation).set({
+      location: location
     })
   }
-
-  static listenFeedback(teamNum, callback){
-    let teamFeedback = "/user/" + teamNum + "/details";
-
-    firebase.database().ref(teamFeedback).on('value', (snapshot) => {
-      var feedback = "";
-
-      if (snapshot.val()) {
-        feedback = snapshot.val().feedback;
-      }
-
-      callback(feedback)
-    });
+  static setOwnerName(ownerName){
+    let owner = "/user/" + owner;
+    return firebase.database().ref(owner).set({
+      owner: ownerName
+    })
+  }
+  static setDogName(dogName){
+    let dog = "/user/" + dName;
+    return firebase.database().ref(dog).set({
+      dog: dogName
+    })
   }
 }
 module.exports = Database;

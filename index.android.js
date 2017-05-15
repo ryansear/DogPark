@@ -14,6 +14,7 @@
  } from 'react-native';
  import Login from "./includes/views/login";
  import Home from "./includes/views/home";
+ import Signup from "./includes/views/signup";
 
  firebase.initializeApp({
   apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
@@ -62,6 +63,10 @@
 
         case "Login":
           return (<Login navigator={navigator} />);
+          break;
+
+        case "Signup":
+          return (<Signup navigator={navigator} />);
           break;
 
       }

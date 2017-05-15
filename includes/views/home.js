@@ -7,6 +7,7 @@ import {
     ListView
 } from "react-native";
 
+import MapView from "react-native-maps";
 import Button from "apsl-react-native-button";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Hideo} from "react-native-textinput-effects";
@@ -17,18 +18,16 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-
+this.itemsRef = firebase.database().ref();
         this.state = {
             dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-      teamNum: teamNum,
-      feedbackForm:feedbackForm,
-      feedback:feedback
+      ownerName: ownerName,
+      dogName:dogName,
         };
 
         this.logout = this.logout.bind(this);
-        this.saveFeedback = this.saveFeedback.bind(this);
 
     }
 
@@ -48,20 +47,31 @@ class Home extends Component {
 
     }
 
+    listenForItems(itemsRef) {
+    itemsRef.on('value', (snap) => {
+
+      // get children as an array
+      var items = [];
+      snap.forEach((child) => {
+        items.push({
+          ownerName: child.val().owner,
+          _key: child.key
+        });
+      });
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items)
+      });
+
+    });
+  }
+
     async componentDidMount() {
 
         try {
 
             // Get User Credentials
             let user = await firebase.auth().currentUser;
-
-            // Listen for Mobile Changes
-            Database.listenFeedback(user.uid, (feedback) => {
-                this.setState({
-                    feedback: feedback,
-                    feedbackForm: feedbackForm
-                });
-            });
 
             this.setState({
                 uid: user.uid
@@ -73,38 +83,22 @@ class Home extends Component {
 
     }
 
-    saveFeedback() {
 
-        // Set Mobile
-        if (this.state.uid && this.state.feedbackForm) {
-            Database.setFeedback(this.state.uid, this.state.feedbackForm);
-            DismissKeyboard();
-        }
-
-    }
 
     render() {
 
         return (
-            <TouchableWithoutFeedback onPress={() => {DismissKeyboard()}}>
+            <TouchableWithoutFeedback>
                 <View>
                     <Text style={styles.heading}>Hello UserId: {this.state.uid}</Text>
-                    <Text style={styles.heading}>Team Feedback (From Database): {this.state.feedback}</Text>
-                    <View style={styles.form}>
-                        <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={this._renderTeamNum.bind(this)}
-                        enableEmptySections={true}
-                        />
-                        <Button onPress={this.saveFeedback} textStyle={{fontSize: 18}}>
-                            Save
-                        </Button>
-                    </View>
                     <View style={styles.logout}>
                         <Button onPress={this.logout} textStyle={{fontSize: 18}}>
                             Logout
                         </Button>
                     </View>
+                  <ListView
+
+                  />
                 </View>
             </TouchableWithoutFeedback>
         );
