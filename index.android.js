@@ -15,20 +15,19 @@
  import Login from "./includes/views/login";
  import Home from "./includes/views/home";
  import Signup from "./includes/views/signup";
-
- firebase.initializeApp({
-  apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
-  authDomain: "dogpark-474ff.firebaseapp.com",
-  databaseURL: "https://dogpark-474ff.firebaseio.com",
-  projectId: "dogpark-474ff",
-  storageBucket: "dogpark-474ff.appspot.com",
-  messagingSenderId: "147904946050"
- });
+import Firebase from "./includes/firebase/firebase";
 
  export default class DogPark extends Component {
    constructor(props) {
      super(props);
-
+     firebase.initializeApp({
+      apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
+      authDomain: "dogpark-474ff.firebaseapp.com",
+      databaseURL: "https://dogpark-474ff.firebaseio.com",
+      projectId: "dogpark-474ff",
+      storageBucket: "dogpark-474ff.appspot.com",
+      messagingSenderId: "147904946050"
+     });
      this.getInitialView();
 
      this.state = {

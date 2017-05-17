@@ -1,21 +1,24 @@
 import * as firebase from "firebase";
 
 class Database{
-  static setLocation(location){
-    let userLocation = "/user/" + userLocation;
-    return firebase.database().ref(userLocation).set({
+  static setUser(userId){
+    return firebase.database().ref('/users/').set({
+      user: userId
+    })
+  }
+  static setLocation(userId, location){
+    return firebase.database().ref('/users/' + userId + '/').set({
       location: location
     })
   }
-  static setOwnerName(ownerName){
-    let owner = "/user/" + owner;
-    return firebase.database().ref(owner).set({
+  static setOwnerName(userId, ownerName){
+    return firebase.database().ref('/users/' + userId + '/').set({
       owner: ownerName
     })
   }
-  static setDogName(dogName){
+  static setDogName(userId, dogName){
     let dog = "/user/" + dName;
-    return firebase.database().ref(dog).set({
+    return firebase.database().ref('/users/' + userId + '/').set({
       dog: dogName
     })
   }

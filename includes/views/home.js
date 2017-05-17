@@ -7,12 +7,13 @@ import {
     ListView
 } from "react-native";
 
-import MapView from "react-native-maps";
+import * as firebase from "firebase";
 import Button from "apsl-react-native-button";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Hideo} from "react-native-textinput-effects";
 import Database from "../firebase/database";
 import DismissKeyboard from "dismissKeyboard";
+
 
 class Home extends Component {
 
@@ -21,10 +22,8 @@ class Home extends Component {
 this.itemsRef = firebase.database().ref();
         this.state = {
             dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
+        rowHasChanged: (row1, row2) => row1 !== row2
       }),
-      ownerName: ownerName,
-      dogName:dogName,
         };
 
         this.logout = this.logout.bind(this);
@@ -71,11 +70,6 @@ this.itemsRef = firebase.database().ref();
         try {
 
             // Get User Credentials
-            let user = await firebase.auth().currentUser;
-
-            this.setState({
-                uid: user.uid
-            });
 
         } catch (error) {
             console.log(error);
@@ -90,15 +84,12 @@ this.itemsRef = firebase.database().ref();
         return (
             <TouchableWithoutFeedback>
                 <View>
-                    <Text style={styles.heading}>Hello UserId: {this.state.uid}</Text>
+                    <Text style={styles.heading}>Hello {this.state.user}</Text>
                     <View style={styles.logout}>
                         <Button onPress={this.logout} textStyle={{fontSize: 18}}>
                             Logout
                         </Button>
                     </View>
-                  <ListView
-
-                  />
                 </View>
             </TouchableWithoutFeedback>
         );

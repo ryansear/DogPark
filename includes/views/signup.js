@@ -30,12 +30,13 @@ class Signup extends Component {
     };
   }
 
-  async signup() {
+  signup() {
     try {
-        await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);
 
-        setOwnerName(this.state.ownerName);
-        setDogName(this.state.dogName);
+        Database.setUser();
+        Database.setOwnerName(this.state.ownerName);
+        Database.setDogName(this.state.dogName);
 
         this.setState({
             response: "account created"
@@ -48,9 +49,7 @@ class Signup extends Component {
         }, 1500);
 
     } catch (error) {
-        this.setState({
-            response: error.toString()
-        })
+
     }
   }
   render() {
@@ -98,7 +97,6 @@ class Signup extends Component {
                            iconName={"key"}
                            iconColor={"white"}
                            onChangeText={(dogName) => this.setState({dogName})}
-                           password={true}
                            autoCapitalize="none"
                        />
 
