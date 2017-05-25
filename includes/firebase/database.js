@@ -1,26 +1,10 @@
-import * as firebase from "firebase";
-
-class Database{
-  static setUser(userId){
-    return firebase.database().ref('/users/').set({
-      user: userId
-    })
-  }
-  static setLocation(userId, location){
-    return firebase.database().ref('/users/' + userId + '/').set({
-      location: location
-    })
-  }
-  static setOwnerName(userId, ownerName){
-    return firebase.database().ref('/users/' + userId + '/').set({
-      owner: ownerName
-    })
-  }
-  static setDogName(userId, dogName){
-    let dog = "/user/" + dName;
-    return firebase.database().ref('/users/' + userId + '/').set({
-      dog: dogName
-    })
+class Database {
+  static setUser (user1, ownerName, dogName){
+    firebaseApp.database().ref("user/").set({
+        user1: {
+          owner: ownerName,
+          dog: dogName
+        }
+    });
   }
 }
-module.exports = Database;

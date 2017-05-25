@@ -11,7 +11,6 @@ import * as firebase from "firebase";
 import Button from "apsl-react-native-button";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Hideo} from "react-native-textinput-effects";
-import Database from "../firebase/database";
 import DismissKeyboard from "dismissKeyboard";
 
 
@@ -20,10 +19,13 @@ class Home extends Component {
     constructor(props) {
         super(props);
 this.itemsRef = firebase.database().ref();
+let user1 = firebase.auth().currentUser;
+let userID = user1.uid;
         this.state = {
             dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
       }),
+      user: userID
         };
 
         this.logout = this.logout.bind(this);
@@ -68,7 +70,10 @@ this.itemsRef = firebase.database().ref();
     async componentDidMount() {
 
         try {
-
+          let user1 = firebase.auth().currentUser;
+          this.setState({
+            user: user1.email
+          });
             // Get User Credentials
 
         } catch (error) {

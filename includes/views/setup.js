@@ -15,8 +15,10 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Sae} from "react-native-textinput-effects";
 import DismissKeyboard from "dismissKeyboard";
 import Button from "apsl-react-native-button";
+import Database from "../firebase/database";
 
-class Signup extends Component {
+
+class Setup extends Component {
   constructor(props){
     super(props);
 
@@ -24,31 +26,35 @@ class Signup extends Component {
         email: "",
         password: "",
         response: "",
+        ownerName: "",
+        dogName: ""
     };
 
-    this.signup = this.signup.bind(this);
+    this.setup = this.setup.bind(this);
   }
 
-signup() {
-          try{firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);} catch(error) {
-            this.setState({response: error.toString()})
-          }
+setup() {
+            try{ firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);} catch (error){
+              this.setState({
+                response: error
+              })
+            }
+            let user1 = firebase.auth().currentUser;
+            let userID = user1.email;
+            Database.setUser(userID, this.state.ownerName, this.state.dogName);
 
         this.setState({
-            response: "account created"
+            response: "account setup"
         });
 
         setTimeout(() => {
             this.props.navigator.push({
-                name: "Setup"
+                name: "Home"
             })
         }, 1500);
+}
 
-     } catch (error) {
-      this.setState({
-        response: error.toString()
-      })
-    }
+
 
   render() {
     return(
@@ -58,7 +64,7 @@ signup() {
                style={styles.main}>
 
                    <View style={styles.formGroup}>
-                       <Text style={styles.title}>Signup</Text>
+                       <Text style={styles.title}>Setup</Text>
                        <Sae
                            label={"Email Address"}
                            labelStyle={{color: "#fff"}}
@@ -79,10 +85,28 @@ signup() {
                            password={true}
                            autoCapitalize="none"
                        />
+                       <Sae
+                           label={"Owner's Name"}
+                           labelStyle={{color: "#fff"}}
+                           iconClass={FontAwesomeIcon}
+                           iconName={"key"}
+                           iconColor={"white"}
+                           onChangeText={(ownerName) => this.setState({ownerName})}
+                           autoCapitalize="none"
+                       />
+                       <Sae
+                           label={"Dog's Name"}
+                           labelStyle={{color: "#fff"}}
+                           iconClass={FontAwesomeIcon}
+                           iconName={"key"}
+                           iconColor={"white"}
+                           onChangeText={(dogName) => this.setState({dogName})}
+                           autoCapitalize="none"
+                       />
 
                        <View style={styles.submit}>
-                           <Button onPress={this.signup} style={styles.buttons} textStyle={{fontSize: 18, color: "#000"}}>
-                               Sign up
+                           <Button onPress={this.setup} style={styles.buttons} textStyle={{fontSize: 18, color: "#000"}}>
+                               Login
                            </Button>
                        </View>
                    </View>
@@ -132,4 +156,4 @@ const styles = StyleSheet.create({
 });
 
 
-module.exports = Signup;
+module.exports = Setup;

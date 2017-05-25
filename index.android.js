@@ -15,21 +15,23 @@
  import Login from "./includes/views/login";
  import Home from "./includes/views/home";
  import Signup from "./includes/views/signup";
-import Firebase from "./includes/firebase/firebase";
+ import Setup from "./includes/views/setup";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
+ authDomain: "dogpark-474ff.firebaseapp.com",
+ databaseURL: "https://dogpark-474ff.firebaseio.com",
+ projectId: "dogpark-474ff",
+ storageBucket: "dogpark-474ff.appspot.com",
+ messagingSenderId: "147904946050"
+}
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
  export default class DogPark extends Component {
    constructor(props) {
      super(props);
-     firebase.initializeApp({
-      apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
-      authDomain: "dogpark-474ff.firebaseapp.com",
-      databaseURL: "https://dogpark-474ff.firebaseio.com",
-      projectId: "dogpark-474ff",
-      storageBucket: "dogpark-474ff.appspot.com",
-      messagingSenderId: "147904946050"
-     });
-     this.getInitialView();
 
+     this.getInitialView();
      this.state = {
        userLoaded: false,
        initialView: null
@@ -68,6 +70,10 @@ import Firebase from "./includes/firebase/firebase";
           return (<Signup navigator={navigator} />);
           break;
 
+        case "Setup":
+          return (<Setup navigator={navigator} />);
+          break;
+
       }
 
     }
@@ -102,5 +108,7 @@ import Firebase from "./includes/firebase/firebase";
     }
 
   }
+
+
 
 AppRegistry.registerComponent('DogPark', () => DogPark);
