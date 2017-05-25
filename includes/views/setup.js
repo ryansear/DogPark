@@ -34,24 +34,21 @@ class Setup extends Component {
   }
 
 setup() {
-            try{ firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);} catch (error){
-              this.setState({
-                response: error
-              })
-            }
+           firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+
+          try{
             let user1 = firebase.auth().currentUser;
             let userID = user1.email;
             Database.setUser(userID, this.state.ownerName, this.state.dogName);
-
-        this.setState({
-            response: "account setup"
-        });
+          } catch (error){
+            response: error
+          }
 
         setTimeout(() => {
             this.props.navigator.push({
                 name: "Home"
             })
-        }, 1500);
+        }, 5000);
 }
 
 
