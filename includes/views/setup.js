@@ -15,43 +15,41 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Sae} from "react-native-textinput-effects";
 import DismissKeyboard from "dismissKeyboard";
 import Button from "apsl-react-native-button";
-import Database from "../firebase/database";
-
 
 class Setup extends Component {
   constructor(props){
     super(props);
 
     this.state = {
-        email: "",
-        password: "",
-        response: "",
         ownerName: "",
-        dogName: ""
+        dogName: "",
+        response: "",
     };
 
     this.setup = this.setup.bind(this);
   }
 
 setup() {
-           firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-
-          try{
-            let user1 = firebase.auth().currentUser;
-            let userID = user1.email;
-            Database.setUser(userID, this.state.ownerName, this.state.dogName);
-          } catch (error){
-            response: error
-          }
-
-        setTimeout(() => {
-            this.props.navigator.push({
-                name: "Home"
-            })
-        }, 5000);
+  try{
+let user1 = firebase.auth().currentUser;
+  user1.updateProfile({
+    displayName: this.state.ownerName
+  });
+  firebase.database().ref('user/' + user1.uid + '/').set({
+    owner: this.state.ownerName,
+    dog: this.state.dogName
+  });
+  setTimeout(() => {
+      this.props.navigator.push({
+          name: "Home"
+      })
+  }, 1500);
+} catch (error){
+  this.setState({
+    response: error.toString
+  })
 }
-
-
+}
 
   render() {
     return(
@@ -63,27 +61,7 @@ setup() {
                    <View style={styles.formGroup}>
                        <Text style={styles.title}>Setup</Text>
                        <Sae
-                           label={"Email Address"}
-                           labelStyle={{color: "#fff"}}
-                           iconClass={FontAwesomeIcon}
-                           iconName={"pencil"}
-                           iconColor={"white"}
-                           onChangeText={(email) => this.setState({email})}
-                           keyboardType="email-address"
-                           autoCapitalize="none"
-                       />
-                       <Sae
-                           label={"Password"}
-                           labelStyle={{color: "#fff"}}
-                           iconClass={FontAwesomeIcon}
-                           iconName={"key"}
-                           iconColor={"white"}
-                           onChangeText={(password) => this.setState({password})}
-                           password={true}
-                           autoCapitalize="none"
-                       />
-                       <Sae
-                           label={"Owner's Name"}
+                           label={"Your Name"}
                            labelStyle={{color: "#fff"}}
                            iconClass={FontAwesomeIcon}
                            iconName={"key"}
@@ -151,6 +129,5 @@ const styles = StyleSheet.create({
         padding: 50,
     }
 });
-
 
 module.exports = Setup;

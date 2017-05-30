@@ -15,6 +15,7 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Sae} from "react-native-textinput-effects";
 import DismissKeyboard from "dismissKeyboard";
 import Button from "apsl-react-native-button";
+import getDatabase from "../firebase/firebase";
 
 class Signup extends Component {
   constructor(props){
@@ -30,13 +31,10 @@ class Signup extends Component {
   }
 
 signup() {
-          try{firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password);} catch(error) {
-            this.setState({response: error.toString()})
-          }
-
-        this.setState({
-            response: "account created"
-        });
+  try{
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(signIn = () =>
+          firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      ).catch(error => this.setState({response: error.toString}));
 
         setTimeout(() => {
             this.props.navigator.push({
@@ -49,6 +47,7 @@ signup() {
         response: error.toString()
       })
     }
+  }
 
   render() {
     return(

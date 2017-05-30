@@ -12,20 +12,19 @@ import Button from "apsl-react-native-button";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import {Hideo} from "react-native-textinput-effects";
 import DismissKeyboard from "dismissKeyboard";
+import Signup from "./signup";
 
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
-this.itemsRef = firebase.database().ref();
-let user1 = firebase.auth().currentUser;
-let userID = user1.uid;
+        this.itemsRef = firebase.database().ref();
         this.state = {
             dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
       }),
-      user: userID
+      user: ""
         };
 
         this.logout = this.logout.bind(this);
@@ -72,7 +71,7 @@ let userID = user1.uid;
         try {
           let user1 = firebase.auth().currentUser;
           this.setState({
-            user: user1.email
+            user: user1.displayName
           });
             // Get User Credentials
 

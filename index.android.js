@@ -16,21 +16,12 @@
  import Home from "./includes/views/home";
  import Signup from "./includes/views/signup";
  import Setup from "./includes/views/setup";
-
-const firebaseConfig = {
- apiKey: "AIzaSyAsFIs0QQszg5a_H-WvbEh8Fa-IzycIeNY",
- authDomain: "dogpark-474ff.firebaseapp.com",
- databaseURL: "https://dogpark-474ff.firebaseio.com",
- projectId: "dogpark-474ff",
- storageBucket: "dogpark-474ff.appspot.com",
- messagingSenderId: "147904946050"
-}
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+ import Firebase from "./includes/firebase/firebase";
 
  export default class DogPark extends Component {
    constructor(props) {
      super(props);
-
+Firebase.initialise();
      this.getInitialView();
      this.state = {
        userLoaded: false,
