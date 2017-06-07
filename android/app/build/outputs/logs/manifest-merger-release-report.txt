@@ -62,7 +62,7 @@ MERGED from [org.webkit:android-jsc:r174650] /Users/Ryan/GitHub/DogPark/android/
 	android:allowBackup
 		ADDED from /Users/Ryan/GitHub/DogPark/android/app/src/main/AndroidManifest.xml:16:7-33
 	android:icon
-		ADDED from /Users/Ryan/GitHub/DogPark/android/app/src/main/AndroidManifest.xml:18:7-35
+		ADDED from /Users/Ryan/GitHub/DogPark/android/app/src/main/AndroidManifest.xml:18:7-33
 	android:theme
 		ADDED from /Users/Ryan/GitHub/DogPark/android/app/src/main/AndroidManifest.xml:19:7-38
 	android:name
