@@ -1,9 +1,6 @@
 import * as firebase from "firebase";
 
-let _database = null;
-
 class Firebase {
-
     /**
      * Initialises Firebase
      */
@@ -19,14 +16,6 @@ class Firebase {
         firebase.database.enableLogging(true);
     }
 
-}
-
-export const getDatabase = () => {
-  if(!_database) {
-    initialise();
-    _database = firebase.database();
-  }
-  return _database;
 }
 
 module.exports = Firebase;

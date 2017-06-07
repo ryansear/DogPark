@@ -24,6 +24,8 @@ class Setup extends Component {
         ownerName: "",
         dogName: "",
         response: "",
+        latitude: 0,
+        longitude: 0
     };
 
     this.setup = this.setup.bind(this);
@@ -35,10 +37,19 @@ let user1 = firebase.auth().currentUser;
   user1.updateProfile({
     displayName: this.state.ownerName
   });
-  firebase.database().ref('user/' + user1.uid + '/').set({
-    owner: this.state.ownerName,
-    dog: this.state.dogName
-  });
+  navigator.geolocation.getCurrentPosition((position) => {
+      firebase.database().ref('user/' + user1.uid + '/').set({
+        owner: this.state.ownerName,
+        dog: this.state.dogName,
+        location: {
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude }
+      });
+  }, (error) => {
+alert(error.message);
+}, {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10}
+);
+
   setTimeout(() => {
       this.props.navigator.push({
           name: "Home"

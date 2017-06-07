@@ -14,14 +14,18 @@
  } from 'react-native';
  import Login from "./includes/views/login";
  import Home from "./includes/views/home";
- import Signup from "./includes/views/signup";
  import Setup from "./includes/views/setup";
  import Firebase from "./includes/firebase/firebase";
+
+ let _database = null;
 
  export default class DogPark extends Component {
    constructor(props) {
      super(props);
-Firebase.initialise();
+     if(!_database) {
+       Firebase.initialise();
+       _database = firebase.database();
+     }
      this.getInitialView();
      this.state = {
        userLoaded: false,
@@ -55,10 +59,6 @@ Firebase.initialise();
 
         case "Login":
           return (<Login navigator={navigator} />);
-          break;
-
-        case "Signup":
-          return (<Signup navigator={navigator} />);
           break;
 
         case "Setup":
