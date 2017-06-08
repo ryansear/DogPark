@@ -13,7 +13,6 @@ class Firebase {
           storageBucket: "dogpark-474ff.appspot.com",
           messagingSenderId: "147904946050"
         });
-        firebase.database.enableLogging(true);
     }
 
 }

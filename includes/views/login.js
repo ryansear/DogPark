@@ -32,10 +32,11 @@ class Login extends Component {
 
     async signup() {
       try{
+        //creates new firebase user then once that promise is fulfilled, it logs them in
             firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(signIn = () =>
               firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
           ).catch(error => this.setState({response: error.toString}));
-
+//moves to next scene, setup
             setTimeout(() => {
                 this.props.navigator.push({
                     name: "Setup"
@@ -52,12 +53,13 @@ class Login extends Component {
     async login() {
 
         try {
+          //logs in to firebase
             await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
 
             this.setState({
                 response: "Logged In!"
             });
-
+//moves on to home scene
             setTimeout(() => {
                 this.props.navigator.push({
                     name: "Home"
@@ -75,13 +77,13 @@ class Login extends Component {
     render() {
       return(
         <TouchableWithoutFeedback onPress={() => {DismissKeyboard()}}>
-                 <Image
+                 <Image//background image
                  source={require('./grass.jpg')}
                  style={styles.main}>
 
                      <View style={styles.formGroup}>
                          <Text style={styles.title}>Login</Text>
-                         <Sae
+                         <Sae//text input box
                              label={"Email Address"}
                              labelStyle={{color: "#fff"}}
                              iconClass={FontAwesomeIcon}
@@ -103,9 +105,11 @@ class Login extends Component {
                          />
 
                          <View style={styles.submit}>
+                         //runs sign up
                              <Button onPress={this.signup} style={styles.buttons} textStyle={{fontSize: 18, color: "#000"}}>
                                  Sign up
                              </Button>
+                             //runs login
                              <Button onPress={this.login} style={styles.buttons} textStyle={{fontSize: 18, color: "#000"}}>
                              Login
                              </Button>

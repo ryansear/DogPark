@@ -22,6 +22,7 @@
  export default class DogPark extends Component {
    constructor(props) {
      super(props);
+     //initializes firebase if not already
      if(!_database) {
        Firebase.initialise();
        _database = firebase.database();
@@ -37,11 +38,9 @@
    }
 
    getInitialView() {
-
+//bypasses login screen if user already logged in
      firebase.auth().onAuthStateChanged((user) => {
-
        let initialView = user ? "Home" : "Login";
-
        this.setState({
          userLoaded: true,
          initialView: initialView
@@ -50,7 +49,7 @@
 
    }
    static renderScene(route, navigator) {
-
+//different scenes
       switch (route.name) {
 
         case "Home":
@@ -83,7 +82,7 @@
     }
 
     render() {
-
+//render the Navigator which controls the scenes
       if (this.state.userLoaded) {
 
         return (

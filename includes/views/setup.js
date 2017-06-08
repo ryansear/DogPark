@@ -34,9 +34,11 @@ class Setup extends Component {
 setup() {
   try{
 let user1 = firebase.auth().currentUser;
+//update firebase users display name to name they entered
   user1.updateProfile({
     displayName: this.state.ownerName
   });
+  //gets the user's current location and puts it in the database
   navigator.geolocation.getCurrentPosition((position) => {
       firebase.database().ref('user/' + user1.uid + '/').set({
         owner: this.state.ownerName,
@@ -49,7 +51,7 @@ let user1 = firebase.auth().currentUser;
 alert(error.message);
 }, {enableHighAccuracy: true, timeout: 20000, distanceFilter: 10}
 );
-
+//moves on to home scene
   setTimeout(() => {
       this.props.navigator.push({
           name: "Home"
@@ -65,12 +67,14 @@ alert(error.message);
   render() {
     return(
       <TouchableWithoutFeedback onPress={() => {DismissKeyboard()}}>
+//background image
                <Image
                source={require('./grass.jpg')}
                style={styles.main}>
 
                    <View style={styles.formGroup}>
                        <Text style={styles.title}>Setup</Text>
+//render text input boxes
                        <Sae
                            label={"Your Name"}
                            labelStyle={{color: "#fff"}}
@@ -90,7 +94,7 @@ alert(error.message);
                            autoCapitalize="none"
                        />
 
-                       <View style={styles.submit}>
+                       <View style={styles.submit}>//run setup
                            <Button onPress={this.setup} style={styles.buttons} textStyle={{fontSize: 18, color: "#000"}}>
                                Login
                            </Button>
